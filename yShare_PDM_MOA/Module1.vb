@@ -191,7 +191,7 @@
         SQL = "SELECT ArtAnagrafica.CodArt, ArtAnagrafica.DesArt, ArtAnagrafica.CodFamiglia, ArtAnagrafica.CodFamiglia, ArtAnagrafica.FirmaUltVarData, ModaArticoli.CostoSchedaProd, ModaArticoli.AltezzaTessuto, ModaArticoli.PesoSpecifico, ArtAnagrafica.DesArt, ArtAnagrafica.DesArt, ModaArticoli.CodComposizione1, ModaTabComposizioni.Descrizione_1, ArtAnagrafica.TecniciUm, ArtAnagrafica.AcqCodForAbituale, ArtAnagrafica.AcqUm, ModaArticoli.CodClassifComponente, ModaArticoli.CodiceTabellaTaglie, TipoArt, ArtAnagrafica.DesEstesa, StatoArt " &
         "FROM UnitaDiMisura RIGHT JOIN (((ArtAnagrafica LEFT JOIN ModaArticoli ON (ArtAnagrafica.CodArt = ModaArticoli.CodiceArticolo) AND (ArtAnagrafica.DBGruppo = ModaArticoli.DBGruppo)) LEFT JOIN ModaTabComposizioni ON (ModaArticoli.DBGruppo = ModaTabComposizioni.DBGruppo) AND (ModaArticoli.CodComposizione1 = ModaTabComposizioni.CodiceComposizione)) LEFT JOIN Famiglia ON (ArtAnagrafica.DBGruppo = Famiglia.DBGruppo) AND (ArtAnagrafica.CodFamiglia = Famiglia.CodFamiglia)) ON UnitaDiMisura.CodUnitaMisura = ArtAnagrafica.TecniciUm " &
         "WHERE ArtAnagrafica.DBGruppo='" & GruppoArchivi & "' AND ArtAnagrafica.DesArt Is Not Null AND ArtAnagrafica.TipoAnagr=1 AND ArtAnagrafica.DesArt>' '  and (TipoArt=0 or TipoArt=1) AND " &
-        "ArtAnagrafica.FirmaUltVarData>='" & DataEsolver & "'"
+        "ArtAnagrafica.FirmaUltVarData>='" & DataEsolver & "' AND ArtAnagrafica.FirmaUltVarOperatore <> 'VARAUTO'"
 
         rstESolver.Open(SQL, connESolver, ADODB.CursorTypeEnum.adOpenKeyset, ADODB.LockTypeEnum.adLockReadOnly)
 
@@ -317,7 +317,7 @@
         SQL = "SELECT ArtConfigVariante.CodArt, ArtConfigVariante.VarianteArt, ArtConfigVariante.Descrizione, 1 AS Espr1, StatoArt, ArtConfigVariante.DataFineValidita, ModaArticoli.CostoSchedaProd " &
           "FROM (ArtConfigVariante INNER JOIN ArtAnagrafica ON (ArtConfigVariante.CodArt = ArtAnagrafica.CodArt) AND (ArtConfigVariante.DBGruppo = ArtAnagrafica.DBGruppo)) LEFT JOIN ModaArticoli ON (ArtAnagrafica.CodArt = ModaArticoli.CodiceArticolo) AND (ArtAnagrafica.DBGruppo = ModaArticoli.DBGruppo) " &
           "WHERE ArtConfigVariante.DBGruppo ='" & GruppoArchivi & "' AND ArtAnagrafica.DesArt Is Not Null AND ArtAnagrafica.TipoAnagr=1 AND ArtAnagrafica.DesArt>' 'and (TipoArt=0 or TipoArt=1) AND ArtConfigVariante.VarianteArt Is Not Null AND ArtConfigVariante.VarianteArt>'' AND " &
-          "ArtAnagrafica.FirmaUltVarData>='" & DataEsolver & "'"
+          "ArtAnagrafica.FirmaUltVarData>='" & DataEsolver & "' AND ArtAnagrafica.FirmaUltVarOperatore <> 'VARAUTO'"
 
         rstESolver.Open(SQL, connESolver, ADODB.CursorTypeEnum.adOpenKeyset, ADODB.LockTypeEnum.adLockReadOnly)
 
@@ -433,7 +433,7 @@
               "ArtAnagrafica.TipoArt, ArtAnagrafica.DesArt " &
               "FROM ArtAnagrafica INNER JOIN (ModaArticoli LEFT JOIN ModaTabellaTaglie ON ModaArticoli.CodiceTabellaTaglie = ModaTabellaTaglie.CodiceTabellaTaglie) ON (ArtAnagrafica.CodArt = ModaArticoli.CodiceArticolo) AND (ArtAnagrafica.DBGruppo = ModaArticoli.DBGruppo) " &
               "WHERE (((ArtAnagrafica.DBGruppo)='" & GruppoArchivi & "') AND ((ArtAnagrafica.TipoAnagr)=1) AND ((ArtAnagrafica.TipoArt)=0 OR (ArtAnagrafica.TipoArt)=1) AND ((ArtAnagrafica.DesArt) Is Not Null And (ArtAnagrafica.DesArt)>' ')) AND " &
-              "ArtAnagrafica.FirmaUltVarData>='" & DataEsolver & "'"
+              "ArtAnagrafica.FirmaUltVarData>='" & DataEsolver & "' AND ArtAnagrafica.FirmaUltVarOperatore <> 'VARAUTO'"
 
         rstESolver.Open(SQL, connESolver, ADODB.CursorTypeEnum.adOpenKeyset, ADODB.LockTypeEnum.adLockReadOnly)
 
@@ -598,7 +598,7 @@
 
         SQL = "SELECT ArtAnagrafica.AcqCodForAbituale, AnagrGenIndirizzi.RagSoc1, RagSoc1, RagSoc2, AnagrGenIndirizzi.Indirizzo, Localita, Localita2, AnagrGenIndirizzi.Provincia, AnagrGenIndirizzi.CodStato, AnagrGenIndirizzi.NumTel, AnagrGenIndirizzi.NumFax, AnagrGenIndirizzi.IndirEmail, AnagTerzista " &
               "FROM (ArtAnagrafica LEFT JOIN ClientiFornitori ON (ArtAnagrafica.DBGruppo = ClientiFornitori.DBGruppo) AND (ArtAnagrafica.AcqTipoAnagrForAbit = ClientiFornitori.TipoAnagrafica) AND (ArtAnagrafica.AcqCodForAbituale = ClientiFornitori.CodCliFor)) LEFT JOIN AnagrGenIndirizzi ON (ClientiFornitori.NumRifAltroIndir = AnagrGenIndirizzi.NumProgr) AND (ClientiFornitori.IdAnagGen = AnagrGenIndirizzi.IdAnagGen) " &
-              "WHERE ArtAnagrafica.DBGruppo='" & GruppoArchivi & "' AND ArtAnagrafica.TipoAnagr = 1 AND ArtAnagrafica.DesArt>' ' AND AnagrGenIndirizzi.FirmaUltVarData>='" & DataEsolver & "'" &
+              "WHERE ArtAnagrafica.DBGruppo='" & GruppoArchivi & "' AND ArtAnagrafica.TipoAnagr = 1 AND ArtAnagrafica.DesArt>' ' AND AnagrGenIndirizzi.FirmaUltVarData>='" & DataEsolver & "' AnagrGenIndirizzi.FirmaUltVarOperatore <> 'VARAUTO' " &
               "GROUP BY ArtAnagrafica.AcqCodForAbituale, AnagrGenIndirizzi.RagSoc1, RagSoc1, RagSoc2, AnagrGenIndirizzi.Indirizzo, Localita, Localita2, AnagrGenIndirizzi.Provincia, AnagrGenIndirizzi.CodStato, AnagrGenIndirizzi.NumTel, AnagrGenIndirizzi.NumFax, AnagrGenIndirizzi.IndirEmail, AnagTerzista " &
               "HAVING ArtAnagrafica.AcqCodForAbituale<>0;"
 
@@ -693,7 +693,7 @@
 
         SQL = "SELECT ModaTabComposizioni.CodiceComposizione, ModaTabComposizioni.Descrizione_1, ModaTabComposizioni.DescrizioneEstesa " &
               "FROM ModaTabComposizioni " &
-              "WHERE ModaTabComposizioni.DBGruppo='" & GruppoArchivi & "' AND ModaTabComposizioni.FirmaUltVarData>='" & DataEsolver & "'"
+              "WHERE ModaTabComposizioni.DBGruppo='" & GruppoArchivi & "' AND ModaTabComposizioni.FirmaUltVarData>='" & DataEsolver & "' AND ModaTabComposizioni.FirmaUltVarOperatore <> 'VARAUTO' "
 
         rstESolver.Open(SQL, connESolver, ADODB.CursorTypeEnum.adOpenKeyset, ADODB.LockTypeEnum.adLockReadOnly)
 
