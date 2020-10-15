@@ -598,7 +598,7 @@
 
         SQL = "SELECT ArtAnagrafica.AcqCodForAbituale, AnagrGenIndirizzi.RagSoc1, RagSoc1, RagSoc2, AnagrGenIndirizzi.Indirizzo, Localita, Localita2, AnagrGenIndirizzi.Provincia, AnagrGenIndirizzi.CodStato, AnagrGenIndirizzi.NumTel, AnagrGenIndirizzi.NumFax, AnagrGenIndirizzi.IndirEmail, AnagTerzista " &
               "FROM (ArtAnagrafica LEFT JOIN ClientiFornitori ON (ArtAnagrafica.DBGruppo = ClientiFornitori.DBGruppo) AND (ArtAnagrafica.AcqTipoAnagrForAbit = ClientiFornitori.TipoAnagrafica) AND (ArtAnagrafica.AcqCodForAbituale = ClientiFornitori.CodCliFor)) LEFT JOIN AnagrGenIndirizzi ON (ClientiFornitori.NumRifAltroIndir = AnagrGenIndirizzi.NumProgr) AND (ClientiFornitori.IdAnagGen = AnagrGenIndirizzi.IdAnagGen) " &
-              "WHERE ArtAnagrafica.DBGruppo='" & GruppoArchivi & "' AND ArtAnagrafica.TipoAnagr = 1 AND ArtAnagrafica.DesArt>' ' AND AnagrGenIndirizzi.FirmaUltVarData>='" & DataEsolver & "' AnagrGenIndirizzi.FirmaUltVarOperatore <> 'VARAUTO' " &
+              "WHERE ArtAnagrafica.DBGruppo='" & GruppoArchivi & "' AND ArtAnagrafica.TipoAnagr = 1 AND ArtAnagrafica.DesArt>' ' AND AnagrGenIndirizzi.FirmaUltVarData>='" & DataEsolver & "' AND AnagrGenIndirizzi.FirmaUltVarOperatore <> 'VARAUTO' " &
               "GROUP BY ArtAnagrafica.AcqCodForAbituale, AnagrGenIndirizzi.RagSoc1, RagSoc1, RagSoc2, AnagrGenIndirizzi.Indirizzo, Localita, Localita2, AnagrGenIndirizzi.Provincia, AnagrGenIndirizzi.CodStato, AnagrGenIndirizzi.NumTel, AnagrGenIndirizzi.NumFax, AnagrGenIndirizzi.IndirEmail, AnagTerzista " &
               "HAVING ArtAnagrafica.AcqCodForAbituale<>0;"
 
